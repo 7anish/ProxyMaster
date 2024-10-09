@@ -26,6 +26,10 @@ const UserSchema =  new mongoose.Schema({
     },
     salt : {
         type : String    
+    },
+    Points : {
+        type : Number,
+        default : 0
     }
 }, {timestamps : true})
 
@@ -41,6 +45,19 @@ UserSchema.pre('save' , function (next){
     user.salt = salt
 
     next()
+})
+
+
+UserSchema.static('matchpassword' , async function (Rollno , Password){
+    const user = await this.findOne({RollNo : Rollno})
+
+    if(!user) throw "User Not Found"
+
+    const generatedPassword = createHmac('sha256', user.salt)
+                              .update(Password)
+                              .digest('hex'); 
+    if(generatedPassword != user.password) throw "Passowrd Not Matched"
+    return user;
 })
 
 const user = mongoose.model('user' , UserSchema)
