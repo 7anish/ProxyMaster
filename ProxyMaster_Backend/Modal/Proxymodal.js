@@ -20,6 +20,14 @@ const ProxySchema =  new mongooes.Schema({
         type : String,
         enum : ['Pending' , 'Real' , 'Fault'],
         default : 'Pending'
+    },
+    semester : {
+        type : Number,
+        required : true
+    },
+    section : {
+        type : String,
+        required : true   
     }
 },{timestamps : true})
 

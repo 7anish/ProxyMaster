@@ -1,10 +1,11 @@
 const express = require('express')
-const checkauthentication = require('../Middleware/Checkuser')
 const Route =  express.Router()
-const {handleRaiseProxy , handleResolved , handleverifyproxy} = require('../Controller/Proxycontroller')
+const {handleRaiseProxy , handleResolved , handleVerifyProxy , handleGetClassProxyList ,handleGetPersonalProxyList} = require('../Controller/Proxycontroller')
 
-Route.post('/raiseproxy' , checkauthentication ,handleRaiseProxy)
-Route.patch('/resolvproxy' , checkauthentication ,handleResolved)
-Route.patch('/verifyproxy' , checkauthentication ,handleverifyproxy)
+Route.post('/raiseproxy' ,handleRaiseProxy)
+Route.patch('/resolvproxy' ,handleResolved)
+Route.patch('/verifyproxy' ,handleVerifyProxy)
+Route.get('/getClassproxylist' , handleGetClassProxyList)
+Route.get('/getpersonalproxylist', handleGetPersonalProxyList)
 
 module.exports = Route

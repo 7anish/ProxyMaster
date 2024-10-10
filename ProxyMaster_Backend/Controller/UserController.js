@@ -1,6 +1,6 @@
 const user = require('../Modal/Usermodal')
 const {generateToken} = require('../Config/Jwttoken')
-const handleCreateAccount =async (req,res)=>{
+const handleCreateAccount = async (req,res)=>{
     try{
         if(!req.body || !req.body.name || !req.body.RollNo || !req.body.semester || !req.body.section || !req.body.password) return res.status(400).json({"Error" : "All Body Filed Required" });
 
@@ -19,7 +19,7 @@ const handleCreateAccount =async (req,res)=>{
     }
 }
 
-const handleLogin =async (req,res)=>{
+const handleLogin = async (req,res)=>{
     try{
         if(!req.body || !req.body.RollNo || !req.body.password) return res.status(400).json({"Error" : "All Body Fileds Are Required"});
 
@@ -29,6 +29,8 @@ const handleLogin =async (req,res)=>{
             id : result._id,
             ROllNo : result.RollNo ,
             password : result.password,
+            section: result.section,
+            semester : result.semester
         })
 
         return res.status(200).json({token})
