@@ -7,13 +7,6 @@ const PORT = process.env.PORT
 const ProxyRouter = require('./Router/ProxyRouter.js')
 const checkauthentication = require('./Middleware/Checkuser.js')
 
-// const firebse =  require('firebase-admin')
-// const  serviceAccount = require('./Firebase/firebase.json')
-
-
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount)
-//   });
 
 const app = express()
 ConnectDataBase(url)

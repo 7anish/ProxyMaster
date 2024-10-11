@@ -1,4 +1,6 @@
 const proxyRequests = require('../Modal/Proxymodal')
+const user = require('../Modal/Usermodal')
+const { sendNotification } = require('../Config/Notification')  // For sending notification to each user of same section 
 
 // Raised Proxy
 const handleRaiseProxy = async (req,res)=>{
