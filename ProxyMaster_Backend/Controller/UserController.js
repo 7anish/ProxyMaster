@@ -9,7 +9,7 @@ const handleCreateAccount = async (req,res)=>{
             RollNo : req.body.RollNo,
             semester : req.body.semester,
             section : req.body.section,
-            password : req.body.password
+            password : req.body.password,
         })
         return res.status(201).json({"Message" : "Account Created SucessFully"});
         

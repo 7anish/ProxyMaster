@@ -13,7 +13,7 @@ const ProxySchema =  new mongooes.Schema({
     },
     status : {
         type : String,
-        enum : ['Pending' , 'Done' , 'NOTDONE'],
+        enum : ['Pending' , 'RESOLVED' , 'UNRESOLVED'],
         default : 'Pending'
     },
     isTruelyRes : {
@@ -28,6 +28,11 @@ const ProxySchema =  new mongooes.Schema({
     section : {
         type : String,
         required : true   
+    },
+    lect : {
+        type : Number,
+        enum : [1,2,3,4,5,6],
+        required : true
     }
 },{timestamps : true})
 

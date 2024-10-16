@@ -9,7 +9,8 @@ const handleRaiseProxy = async (req,res)=>{
         await proxyRequests.create({
             issuedBy : req.user.id,
             semester : req.user.semester,
-            section : req.user.section
+            section : req.user.section,
+            lect : req.body.lect
         })
         return res.status(201).json({"Message" : "Proxy Request Created"})
     }catch(e){
@@ -23,7 +24,7 @@ const handleResolved = async (req,res)=>{
     try{
         if(!req.body.proxyid) return res.status(400).json({"Error" : "Proxy ID is required"});
 
-        const result = await proxyRequests.findOneAndUpdate( { _id : req.body.proxyid , issuedBy : {$ne : req.user.id} }, {resolvedBy : req.user.id , status : "Done"})
+        const result = await proxyRequests.findOneAndUpdate( { _id : req.body.proxyid , issuedBy : {$ne : req.user.id} }, {resolvedBy : req.user.id , status : "RESOLVED"})
         console.log(result)
         if(!result) return res.status(403).json({"Error" : "Proxy not found / user Cnanot resolve own proxy"});   
 
@@ -41,7 +42,7 @@ const handleVerifyProxy = async (req,res)=>{
         console.log(req.body)
         if(!req.body.proxyid || !req.body.istrue) return res.status(400).json({"Error" : "Proxy ID is required"});
 
-        const result = await proxyRequests.findOneAndUpdate( { _id : req.body.proxyid , issuedBy : req.user.id }, {isTruelyRes: req.body.istrue})
+        const result = await proxyRequests.findOneAndUpdate( { _id : req.body.proxyid , issuedBy : req.user.id }, {isTruelyRes: req.body.istrue ? 'Real'  : 'Fault'})
         console.log(result)
         if(!result) return res.status(403).json({"Error" : "Unauthorised"});   
 
@@ -54,9 +55,9 @@ const handleVerifyProxy = async (req,res)=>{
 // Get all proxy 
 const handleGetClassProxyList = async (req,res)=>{
     try{
-        if(!req.user.id || !req.user.semester || !req.user.section) return res.status(400).json({"Error" : "Not Authorised"});
+        if(!req.user.id || !req.user.semester || !req.user.section || !req.user.lect) return res.status(400).json({"Error" : "Not Authorised"});
 
-        const results = await proxyRequests.find({ semester : req.user.semester , section : req.user.section });
+        const results = await proxyRequests.find({ semester : req.user.semester , section : req.user.section , lect :req.user.lect });
 
         if(results.length == 0) return res.status(200).json({ "Message" : "No Proxy Raised"});
         res.status(200).json(results)
